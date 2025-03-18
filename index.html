@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Dev Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            background-image:
+                    repeating-linear-gradient(to right, transparent 0 100px,
+                    #25283b22 100px 101px),
+                    repeating-linear-gradient(to bottom, transparent 0 100px,
+                    #25283b22 100px 101px);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            position: absolute;
+            width: min(1400px, 90vw);
+            top: 10%;
+            left: 50%;
+            height: 90%;
+            transform: translateX(-50%);
+            content: '';
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: top center;
+            pointer-events: none;
+        }
+
+        /* Fadeout effect for smooth transition */
+        .fadeout {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Animation for content appearing */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Specific animations for info elements */
+        .infoImage img {
+            animation: fadeInScale 0.8s ease forwards;
+        }
+
+        .infotext > * {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .infotext .author {
+            animation: fadeInUp 0.5s ease forwards 0.3s;
+        }
+
+        .infotext .title {
+            animation: fadeInUp 0.5s ease forwards 0.5s;
+        }
+
+        .infotext .topic {
+            animation: fadeInUp 0.5s ease forwards 0.7s;
+        }
+
+        .infotext .des {
+            animation: fadeInUp 0.5s ease forwards 0.9s;
+        }
+
+        .infotext .buttons {
+            animation: fadeInUp 0.5s ease forwards 1.1s;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="banner">
+    <div class="slider" style="--quantity: 10; display: flex">
+        <div class="item" style="--position: 1"><img src="images/PortfolioWebsite.png" alt=""></div>
+        <div class="item" style="--position: 2"><img src="images/sitzplatzbuchung.png" alt=""></div>
+        <div class="item" style="--position: 3"><img src="images/Yachthafen%20Buchung.png" alt=""></div>
+        <div class="item" style="--position: 4"><img src="images/DBMS_Projektarbeit.png" alt=""></div>
+        <div class="item" style="--position: 5"><img src="images/solid-color-image (5).png" alt=""></div>
+        <div class="item" style="--position: 6"><img src="images/solid-color-image (6).png" alt=""></div>
+        <div class="item" style="--position: 7"><img src="images/solid-color-image (7).png" alt=""></div>
+        <div class="item" style="--position: 8"><img src="images/solid-color-image (8).png" alt=""></div>
+        <div class="item" style="--position: 9"><img src="images/solid-color-image (9).png" alt=""></div>
+        <div class="item" style="--position: 10"><img src="images/solid-color-image (10).png" alt=""></div>
+    </div>
+
+    <div class="content">
+        <h1 data-content="Web Dev">
+            Web Dev
+        </h1>
+        <div class="author">
+            <h2>Maximilian Scheffler</h2>
+            <p><b>Web Entwickler</b></p>
+            <p>
+                Meine Projekte
+            </p>
+        </div>
+        <div class="model"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+
+</html>
