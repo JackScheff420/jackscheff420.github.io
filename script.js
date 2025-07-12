@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             infoSection.classList.remove('fadeout');
             document.querySelector('.banner').style.display = 'block';
             // Resume the slider animation
+            slider.style.transition = '';
+            slider.style.transform = '';
             slider.style.animation = 'autoRun 20s linear infinite';
             animationStartTime = Date.now();
             isAnimating = true;
