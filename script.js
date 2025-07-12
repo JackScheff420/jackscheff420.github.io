@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     infoSection.style.display = 'none';
     document.body.appendChild(infoSection);
     
+    // Track rotation state for smooth animations
+    let animationStartTime = Date.now();
+    let currentRotation = 0;
+    let isAnimating = true;
+    
     const imageData = [
         { title: "Meine alte Portfolio Seite", description: "Meine alte Portfolio Seite. Ich möchte sie trotzdem so online lassen um den Wandel der Seiten sehen zu können." },
         { title: "Sitzplatzbuchung", description: "Front-end für eine Simple Sitzplatzbuchung / Design Proof of concept" },
@@ -47,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.banner').style.display = 'block';
             // Resume the slider animation
             slider.style.animation = 'autoRun 20s linear infinite';
+            animationStartTime = Date.now();
+            isAnimating = true;
         }, 500);
     });
 
@@ -63,15 +70,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get the position of the clicked item
             const position = this.style.getPropertyValue('--position');
 
-            // Pause the animation
+            // Pause the animation and capture current rotation
             slider.style.animation = 'none';
+            isAnimating = false;
+            
+            // Get current rotation based on animation progress
+            currentRotation = getCurrentRotation();
 
             // Calculate the rotation needed to bring the clicked item to front
             const itemCount = parseInt(slider.style.getPropertyValue('--quantity'));
             const targetRotation = -(parseInt(position) - 1) * (360 / itemCount);
-
-            // Get current rotation
-            const currentRotation = getCurrentRotation(slider);
 
             // Determine the shortest rotation path
             let rotationDiff = targetRotation - currentRotation;
@@ -127,32 +135,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Function to get current rotation value
-    function getCurrentRotation(element) {
-        // Get the current transform style
-        const style = window.getComputedStyle(element);
-        const matrix = style.transform || style.webkitTransform || style.mozTransform;
-
-        // No transform set, return 0
-        if (matrix === 'none' || matrix === '') {
-            return 0;
+    function getCurrentRotation() {
+        if (isAnimating) {
+            // Calculate rotation based on animation progress
+            const elapsed = Date.now() - animationStartTime;
+            const animationDuration = 20000; // 20s in milliseconds
+            const cycles = elapsed / animationDuration;
+            const rotationProgress = (cycles % 1); // Get fractional part for current cycle
+            return rotationProgress * 360; // Convert to degrees
+        } else {
+            // Return the last known rotation when not animating
+            return currentRotation;
         }
-
-        // Extract rotation from matrix
-        const values = matrix.split('(')[1].split(')')[0].split(',');
-        const a = parseFloat(values[0]);
-        const b = parseFloat(values[1]);
-        const c = parseFloat(values[2]);
-        const d = parseFloat(values[3]);
-
-        // For 3D transforms, we need to use a different approach
-        // This is a simplified approach that works for rotateY
-        if (values.length > 6) {
-            const angle = Math.atan2(parseFloat(values[6]), parseFloat(values[0]));
-            return angle * (180 / Math.PI);
-        }
-
-        // For 2D transforms
-        const angle = Math.atan2(b, a);
-        return angle * (180 / Math.PI);
     }
 });
