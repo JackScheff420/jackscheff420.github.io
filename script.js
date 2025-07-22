@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     infoSection.style.display = 'none';
     document.body.appendChild(infoSection);
     
+    // Track animation timing for accurate rotation calculation
+    let animationStartTime = Date.now();
+    
     const imageData = [
         { title: "Meine alte Portfolio Seite", description: "Meine alte Portfolio Seite. Ich möchte sie trotzdem so online lassen um den Wandel der Seiten sehen zu können." },
         { title: "Sitzplatzbuchung", description: "Front-end für eine Simple Sitzplatzbuchung / Design Proof of concept" },
@@ -49,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
             slider.style.transition = '';
             slider.style.transform = '';
             slider.style.animation = 'autoRun 20s linear infinite';
+            // Reset animation start time for accurate tracking
+            animationStartTime = Date.now();
         }, 500);
     });
 
@@ -136,37 +141,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Function to get current rotation value from computed transform
+    // Function to get current rotation value based on animation timing
     function getCurrentRotation() {
+        // Check if animation is running
         const computedStyle = window.getComputedStyle(slider);
-        const transform = computedStyle.transform;
+        const animationPlayState = computedStyle.animationPlayState;
         
-        if (transform === 'none' || !transform) {
+        if (animationPlayState === 'paused' || computedStyle.animation === 'none') {
+            // If animation is paused, try to get rotation from current transform
+            const transform = computedStyle.transform;
+            if (transform && transform !== 'none') {
+                // Try to extract rotation from transform
+                const rotateYMatch = transform.match(/rotateY\(([^)]+)\)/);
+                if (rotateYMatch) {
+                    const value = rotateYMatch[1];
+                    return parseFloat(value.replace('deg', ''));
+                }
+            }
             return 0;
         }
         
-        // Parse the matrix3d transform to get the Y rotation
-        const matrix = transform.match(/matrix3d\(([^)]+)\)/);
-        if (matrix) {
-            const values = matrix[1].split(',').map(parseFloat);
-            // For rotateY, we can extract the rotation from matrix3d values
-            // The rotation angle can be calculated from the matrix elements
-            const cosY = values[0]; // m11
-            const sinY = values[2]; // m13
-            const rotationY = Math.atan2(sinY, cosY) * (180 / Math.PI);
-            return rotationY;
-        }
+        // Animation is running - calculate based on elapsed time
+        const currentTime = Date.now();
+        const elapsedTime = (currentTime - animationStartTime) % 20000; // 20 second cycle
+        const progress = elapsedTime / 20000; // 0 to 1
+        const currentRotation = progress * 360; // 0 to 360 degrees
         
-        // Fallback: try to parse matrix (2D)
-        const matrix2d = transform.match(/matrix\(([^)]+)\)/);
-        if (matrix2d) {
-            const values = matrix2d[1].split(',').map(parseFloat);
-            const a = values[0];
-            const b = values[1];
-            const angle = Math.atan2(b, a) * (180 / Math.PI);
-            return angle;
-        }
-        
-        return 0;
+        return currentRotation;
     }
 });
