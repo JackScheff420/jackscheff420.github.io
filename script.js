@@ -9,18 +9,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Track animation timing for accurate rotation calculation
     let animationStartTime = Date.now();
     
-    const imageData = [
-        { title: "Meine alte Portfolio Seite", description: "Meine alte Portfolio Seite. Ich möchte sie trotzdem so online lassen um den Wandel der Seiten sehen zu können." },
-        { title: "Sitzplatzbuchung", description: "Front-end für eine Simple Sitzplatzbuchung / Design Proof of concept" },
-        { title: "Yachthafen Buchungssoftware", description: "Eine Projektarbeit für eine einfache Platzbuchungssoftware für einen Yachthafen" },
-        { title: "Artikelverwaltung", description: "Eine Projektarbeit bei der Benutzer Artikeldaten in und aus einer Datenbank einsehen und verändern können" },
-        { title: "Project 5", description: "Beschreibung für Projekt 5. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." },
-        { title: "Project 6", description: "Beschreibung für Projekt 6. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." },
-        { title: "Project 7", description: "Beschreibung für Projekt 7. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." },
-        { title: "Project 8", description: "Beschreibung für Projekt 8. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." },
-        { title: "Project 9", description: "Beschreibung für Projekt 9. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." },
-        { title: "Project 10", description: "Beschreibung für Projekt 10. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse." }
-    ];
+    // Load project data from JSON file
+    let imageData = [];
+    
+    // Fetch project data
+    fetch('projects.json')
+        .then(response => response.json())
+        .then(data => {
+            imageData = data.projects;
+        })
+        .catch(error => {
+            console.error('Error loading project data:', error);
+            // Fallback data if JSON fails to load
+            imageData = [
+                { title: "Meine alte Portfolio Seite", description: "Meine alte Portfolio Seite. Ich möchte sie trotzdem so online lassen um den Wandel der Seiten sehen zu können.", websiteUrl: null, githubUrl: null },
+                { title: "Sitzplatzbuchung", description: "Front-end für eine Simple Sitzplatzbuchung / Design Proof of concept", websiteUrl: null, githubUrl: null },
+                { title: "Yachthafen Buchungssoftware", description: "Eine Projektarbeit für eine einfache Platzbuchungssoftware für einen Yachthafen", websiteUrl: null, githubUrl: null },
+                { title: "Artikelverwaltung", description: "Eine Projektarbeit bei der Benutzer Artikeldaten in und aus einer Datenbank einsehen und verändern können", websiteUrl: null, githubUrl: null },
+                { title: "Project 5", description: "Beschreibung für Projekt 5. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null },
+                { title: "Project 6", description: "Beschreibung für Projekt 6. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null },
+                { title: "Project 7", description: "Beschreibung für Projekt 7. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null },
+                { title: "Project 8", description: "Beschreibung für Projekt 8. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null },
+                { title: "Project 9", description: "Beschreibung für Projekt 9. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null },
+                { title: "Project 10", description: "Beschreibung für Projekt 10. Hier kannst du detaillierte Informationen über dieses Projekt hinzufügen, einschließlich der verwendeten Technologien, Herausforderungen und Ergebnisse.", websiteUrl: null, githubUrl: null }
+            ];
+        });
     
     infoSection.innerHTML = `
                 <div class="infoImage">
@@ -33,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="des"></div>
                     <div class="buttons">
                         <button class="seeMore">SEE MORE</button>
+                        <button class="github">GITHUB</button>
                         <button class="back">BACK</button>
                     </div>
                 </div>
@@ -60,8 +74,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener for see more button
     const seeMoreButton = infoSection.querySelector('.seeMore');
     seeMoreButton.addEventListener('click', function() {
-        // Hier kannst du eine Funktion hinzufügen, die zu einer detaillierteren Projektseite führt
-        alert('Weiterleitung zur Projektdetailseite...');
+        const currentIndex = parseInt(this.getAttribute('data-current-index'));
+        if (currentIndex !== undefined && imageData[currentIndex] && imageData[currentIndex].websiteUrl) {
+            window.open(imageData[currentIndex].websiteUrl, '_blank');
+        } else {
+            alert('Keine Website-URL verfügbar für dieses Projekt');
+        }
+    });
+
+    // Event listener for GitHub button
+    const githubButton = infoSection.querySelector('.github');
+    githubButton.addEventListener('click', function() {
+        const currentIndex = parseInt(this.getAttribute('data-current-index'));
+        if (currentIndex !== undefined && imageData[currentIndex] && imageData[currentIndex].githubUrl) {
+            window.open(imageData[currentIndex].githubUrl, '_blank');
+        } else {
+            alert('Keine GitHub-URL verfügbar für dieses Projekt');
+        }
     });
 
     // Add click event for each image
@@ -123,9 +152,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Set the selected image and text
                     const selectedImg = this.querySelector('img').src;
+                    const currentProject = imageData[index];
+                    
                     infoSection.querySelector('.infoImage img').src = selectedImg;
-                    infoSection.querySelector('.title').textContent = imageData[index].title;
-                    infoSection.querySelector('.des').textContent = imageData[index].description;
+                    infoSection.querySelector('.title').textContent = currentProject.title;
+                    infoSection.querySelector('.des').textContent = currentProject.description;
+
+                    // Set data attributes for button event handlers
+                    const seeMoreBtn = infoSection.querySelector('.seeMore');
+                    const githubBtn = infoSection.querySelector('.github');
+                    
+                    seeMoreBtn.setAttribute('data-current-index', index);
+                    githubBtn.setAttribute('data-current-index', index);
+
+                    // Show/hide buttons based on URL availability
+                    if (currentProject.websiteUrl) {
+                        seeMoreBtn.style.display = 'block';
+                    } else {
+                        seeMoreBtn.style.display = 'none';
+                    }
+
+                    if (currentProject.githubUrl) {
+                        githubBtn.style.display = 'block';
+                    } else {
+                        githubBtn.style.display = 'none';
+                    }
 
                     // Reset animation for next use
                     infoSection.querySelector('.infoImage img').style.animation = 'none';

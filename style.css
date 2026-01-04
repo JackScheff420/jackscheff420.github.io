@@ -170,7 +170,7 @@
 
 .infotext .buttons {
     display: grid;
-    grid-template-columns: repeat(2, 130px);
+    grid-template-columns: repeat(3, 130px);
     grid-template-rows: 40px;
     gap: 20px;
 }
@@ -194,6 +194,16 @@
     background-color: transparent;
     border: 1px solid #fff;
     color: #eee;
+}
+
+.infotext .buttons .github {
+    background-color: #24292e;
+    color: #fff;
+    border: 1px solid #24292e;
+}
+
+.infotext .buttons .github:hover {
+    background-color: #1e2226;
 }
 
 @media screen and (max-width: 1200px) {
@@ -271,5 +281,15 @@
 
     .infotext .topic {
         font-size: 1.5em;
+    }
+
+    .infotext .buttons {
+        grid-template-columns: repeat(2, 120px);
+        grid-template-rows: repeat(2, 40px);
+        justify-content: center;
+    }
+
+    .infotext .buttons .back {
+        grid-column: 1 / -1;
     }
 }

@@ -1,0 +1,64 @@
+{
+  "projects": [
+    {
+      "title": "Meine alte Portfolio Seite",
+      "description": "Meine alte Portfolio Seite. Ich möchte sie trotzdem so online lassen um den Wandel der Seiten sehen zu können.",
+      "websiteUrl": "https://jackscheff420.github.io/portfolio_old/",
+      "githubUrl": "https://github.com/JackScheff420/portfolio_old"
+    },
+    {
+      "title": "Sitzplatzbuchung",
+      "description": "Front-end für eine Simple Sitzplatzbuchung / Design Proof of concept",
+      "websiteUrl": "https://jackscheff420.github.io/sitzplatzbuchung/",
+      "githubUrl": "https://github.com/JackScheff420/sitzplatzbuchung"
+    },
+    {
+      "title": "Yachthafen Buchungssoftware",
+      "description": "Eine Projektarbeit für eine einfache Platzbuchungssoftware für einen Yachthafen",
+      "websiteUrl": null,
+      "githubUrl": "https://github.com/JackScheff420/Yachthafen_Buchung"
+    },
+    {
+      "title": "Artikelverwaltung",
+      "description": "Eine Projektarbeit bei der Benutzer Artikeldaten in und aus einer Datenbank einsehen und verändern können",
+      "websiteUrl": null,
+      "githubUrl": "https://github.com/JackScheff420/DBMS_Projektarbeit"
+    },
+    {
+      "title": "ScheffBlog",
+      "description": "Ein eigener Blog über Videospiele und sonstiges, gemacht mit Jeckyll.",
+      "websiteUrl": "https://jackscheff420.github.io/scheffblog/",
+      "githubUrl": "https://github.com/JackScheff420/scheffblog"
+    },
+    {
+      "title": "Slotmachine",
+      "description": "Ein Webbrowser SlotMachine Spiel mit Progression-Mechaniken.",
+      "websiteUrl": "https://jackscheff420.github.io/SlotMachine/",
+      "githubUrl": "https://github.com/JackScheff420/SlotMachine"
+    },
+    {
+      "title": "Roguelike Path Maker",
+      "description": "Ein Tool zur Erstellung von Roguelike-Leveln mit zufälligen Elementen.",
+      "websiteUrl": "https://jackscheff420.github.io/roguelike-path-maker/",
+      "githubUrl": "https://github.com/JackScheff420/roguelike-path-maker"
+    },
+    {
+      "title": "Decimal Calendar",
+      "description": "Ein Kalender, der das Jahr in ein Dezimalsystem unterteilt. Zusätzlich wird hier die Uhrzeit auch in Dezimal angezeigt.",
+      "websiteUrl": "https://jackscheff420.github.io/decimal-calendar/",
+      "githubUrl": "https://github.com/JackScheff420/decimal-calendar"
+    },
+    {
+      "title": "Project 9",
+      "description": "Beschreibung für Projekt 9.",
+      "websiteUrl": null,
+      "githubUrl": null
+    },
+    {
+      "title": "Project 10",
+      "description": "Beschreibung für Projekt 10.",
+      "websiteUrl": null,
+      "githubUrl": null
+    }
+  ]
+}
